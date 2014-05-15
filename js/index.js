@@ -20,7 +20,7 @@ $(document).ready(function(){
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         var d = R * c;
         return d;
-    };
+    }
     Number.prototype.toRad = function() {
         return this * Math.PI / 180;
     };
@@ -45,25 +45,30 @@ $(document).ready(function(){
                             "</i>: <i>long: "+cur_pos.long+
                             "</i> LastDist: <b>"+twoPointsDis+
                             "</b></i> Total Distance: <b>"+totalDis+"</b></div>");
-    };
+    }
     
     function run(){
         navigator.geolocation.getCurrentPosition(getPosition);
-    };
+    }
     
     function start(){
         mytracker  = setInterval(run, 10000);
-    };
+    }
     
     function stopp(){
         window.clearInterval(mytracker);
         $('#cur_pos').html("<h2>"+ geoarray.length +" Positions saved in Array</h2>"+
                         "<h3> Total Distance: <u>"+totalDis*1000+" Meter moved</u></h3>");
-    };
+    }
+    function save(){
+        window.localStorage.setItem("Tracker:" + Date.now().toString(),JSON.stringify(geoarray));
+        geoarray = [];
+    }
     
     if (navigator.geolocation) {
         $("#start").on("click", start);
         $("#stopp").on("click", stopp);
+        $("#save").on("click", save);
     }
     else {
         console.log('Geolocation is not supported for this Browser/OS version yet.');

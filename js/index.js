@@ -41,9 +41,9 @@ $(document).ready(function(){
         for (var i = 0; i < geoarray.length; i++) {
            totalDis = totalDis + geoarray[i].dis;
         }
-        $('#cur_pos').append("<div><i>"+cur_pos.lat +
-                            "</i>: <i>"+cur_pos.long+
-                            "</i> Dist: <b>"+twoPointsDis+
+        $('#cur_pos').html("<h2>"+(new Date()).toUTCString()+"</h2><div><i>lat: "+cur_pos.lat +
+                            "</i>: <i>long: "+cur_pos.long+
+                            "</i> LastDist: <b>"+twoPointsDis+
                             "</b></i> Total Distance: <b>"+totalDis+"</b></div>");
     };
     
@@ -52,11 +52,13 @@ $(document).ready(function(){
     };
     
     function start(){
-        mytracker  = setInterval(run, 2000);
+        mytracker  = setInterval(run, 10000);
     };
     
     function stopp(){
         window.clearInterval(mytracker);
+        $('#cur_pos').html("<h2>"+ geoarray.length +" Positions saved in Array</h2>"+
+                        "<h3> Total Distance: <u>"+totalDis*1000+" Meter moved</u></h3>");
     };
     
     if (navigator.geolocation) {

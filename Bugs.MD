@@ -9,5 +9,5 @@ Test 15.05.2014:
 
 3 - FIXME: append in div ist keine gute Idee. 
            In der Tag wird alle zwei Sekunden neues
-           Element hinzugef�gt und das macht die Seite voll! innerHTML wäre besser
-FIXED
+           Element hinzugefügt und das macht die Seite voll! innerHTML wäre besser
+FIXED with jquery.html()

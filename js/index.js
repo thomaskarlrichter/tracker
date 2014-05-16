@@ -4,7 +4,7 @@
 $(document).ready(function(){
 
     var mytracker;
-    
+    var record = false;
     var geoarray = [];
     var lat, long, twoPointsDis;
     var last_pos, cur_pos;
@@ -34,6 +34,9 @@ $(document).ready(function(){
         }
         twoPointsDis = calculateDistance(lat, long,
                                          last_pos.lat, last_pos.long);
+        if( twoPointsDis > 0.015) {
+            twoPointsDis = 0;
+        }
         
         cur_pos = {lat: lat, long: long, dis: twoPointsDis};                               
         geoarray.push(cur_pos);
@@ -53,23 +56,60 @@ $(document).ready(function(){
     }
     
     function start(){
+        geoarray = [];
+        record = true;
         mytracker  = setInterval(run, 10000);
     }
     
     function stopp(){
+        console.log(" beginn stopp");
+        var key;
+        var keyarray = [];
+        record = false;
         window.clearInterval(mytracker);
         $('#cur_pos').html("<h2>"+ geoarray.length +" Positions saved in Array</h2>"+
                         "<h3> Total Distance: <u>"+totalDis*1000+" Meter moved</u></h3>");
-    }
-    function save(){
-        window.localStorage.setItem("Tracker:" + Date.now().toString(),JSON.stringify(geoarray));
-        geoarray = [];
+        key = "Tracker" + Date.now();
+        window.localStorage.setItem(key,JSON.stringify(geoarray));
+        console.log(JSON.stringify(geoarray));
+        if(window.localStorage.getItem("tracker")) {
+           keyarray = JSON.parse(window.localStorage.getItem("tracker"));
+        }
+        keyarray.push(key);
+        window.localStorage.setItem("tracker", JSON.stringify(keyarray));
+                console.log("end stopp");
+
     }
     
+    function gesamt(){
+        console.log(" beginn gesamt");
+        var keys, i, j, einzelstrecke=[], laenge=0, count=0;
+        // Fehler war hier hatte keys nicht geparst
+        // keys = window.localStorage.getItem("tracker");
+        // deshalb war keys[i] in zeile 95 [ und nicht "Tracker12345...."
+        keys = JSON.parse(window.localStorage.getItem("tracker"));
+        console.log(keys);
+        if (keys.length > 0) {
+            for(i=0; i< keys.length; i++){
+                console.log(keys[i]);
+                einzelstrecke = JSON.parse(window.localStorage.getItem(keys[i]));
+                console.log(einzelstrecke);
+                for(j=0; j < einzelstrecke.length; j++){
+                    laenge += einzelstrecke[j].dis;
+                    count++;
+                }
+            }
+            
+            $('#cur_pos').html("gesamtlänge: "+laenge+ " count "+count);
+        } else {
+            $('#cur_pos').html("keine Daten vorhanden");
+        }
+    }
+
     if (navigator.geolocation) {
         $("#start").on("click", start);
         $("#stopp").on("click", stopp);
-        $("#save").on("click", save);
+        $("#gesamt").on("click", gesamt);
     }
     else {
         console.log('Geolocation is not supported for this Browser/OS version yet.');

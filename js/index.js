@@ -84,7 +84,7 @@ $(document).ready(function(){
     function gesamt(){
         console.log(" beginn gesamt");
         var keys, i, j, einzelstrecke=[], laenge=0, count=0;
-        // Fehler war hier hatte keys nicht geparst
+        // Fehler war hier, ich hatte keys nicht geparst
         // keys = window.localStorage.getItem("tracker");
         // deshalb war keys[i] in zeile 95 [ und nicht "Tracker12345...."
         keys = JSON.parse(window.localStorage.getItem("tracker"));
@@ -100,7 +100,7 @@ $(document).ready(function(){
                 }
             }
             
-            $('#cur_pos').html("gesamtlänge: "+laenge+ " count "+count);
+            $('#cur_pos').html("gesamtlänge: " + laenge + " count " + count);
         } else {
             $('#cur_pos').html("keine Daten vorhanden");
         }

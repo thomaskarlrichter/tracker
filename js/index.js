@@ -38,6 +38,7 @@ $(document).ready(function(){
         cur_pos = {lat: lat, long: long, dis: twoPointsDis};                               
         geoarray.push(cur_pos);
         
+        totalDis = 0; 
         for (var i = 0; i < geoarray.length; i++) {
            totalDis = totalDis + geoarray[i].dis;
         }

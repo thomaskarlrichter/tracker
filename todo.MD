@@ -1,4 +1,9 @@
+19.05.2014 AuftrÃ¤ge: 
+ - Testen: Farzad macht das
+ - functions schreiben, die Gesamtstrecke im Monat, Wochen, Tag berechnet und in ein Array speichert (return);
+ - Cordova einarbeiten
 
+------------------------------
 1. gps messen
 [link1](http://www.html5rocks.com/en/tutorials/geolocation/trip_meter/)
 
@@ -8,7 +13,7 @@
 ## UI
 
 besteht aus start/stop button
-wenn start gedrÃckt wurde wird in Minutenabstand die Zeit bestimme, eine location ausgelesen diese in
+wenn start gedrï¿½ckt wurde wird in Minutenabstand die Zeit bestimme, eine location ausgelesen diese in
 localStorage mit dem Timestring als key und einem JSON objekt als value weggeschrieben und schliesslich
 die Koordinaten in einer <ul> ausgegeben.
-bei betÃ¤tigen des Toogle-Stopp buttons wird der Interval gelÃscht clearInterval()
+bei betÃ¤tigen des Toogle-Stopp buttons wird der Interval gelï¿½scht clearInterval()

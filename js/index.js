@@ -81,6 +81,34 @@ $(document).ready(function(){
 
     }
     
+    function getPerX(elem){
+        var elements = {};
+        var keys;
+        keys = JSON.parse(window.localStorage.getItem("tracker"));
+        keys.forEach(function(key){
+            var _elements;
+            var steps = JSON.parse(window.localStorage.getItem(key));
+            var d = new Date(+key.split("Tracker")[1]);
+            if(elem === 'month'){
+                _elements = d.getMonth();
+            };
+            if(elem === 'day'){
+                _elements = d.getDay();
+            };
+            if(elem === 'min'){
+                _elements = d.getMinutes();
+            };
+            
+            if(elements[_elements] === undefined){
+                elements[_elements] = 0;
+            }
+            steps.forEach(function(step){
+                elements[_elements] += step.dis;
+            });
+        });
+        return elements;
+    }
+    
     function gesamt(){
         console.log(" beginn gesamt");
         var keys, i, j, einzelstrecke=[], laenge=0, count=0;
@@ -110,6 +138,8 @@ $(document).ready(function(){
         $("#start").on("click", start);
         $("#stopp").on("click", stopp);
         $("#gesamt").on("click", gesamt);
+        $("#testminutes").on("click", function() { console.log( JSON.stringify(getPerX('min')) ); });
+        $("#testmonth").on("click", function() { console.log( JSON.stringify(getPerX('month')) ); });
     }
     else {
         console.log('Geolocation is not supported for this Browser/OS version yet.');

@@ -43,10 +43,11 @@ $(document).ready(function(){
         for (var i = 0; i < geoarray.length; i++) {
            totalDis = totalDis + geoarray[i].dis;
         }
-        $('#cur_pos').html("<h2>"+(new Date()).toUTCString()+"</h2><div><i>lat: "+cur_pos.lat +
-                            "</i>: <i>long: "+cur_pos.long+
-                            "</i> LastDist: <b>"+twoPointsDis+
-                            "</b></i> Total Distance: <b>"+totalDis+"</b></div>");
+        $('#cur_pos').html("<h2>"+(new Date()).toUTCString()+"</h2>" +
+             "<h2>lat: "+cur_pos.lat + "</h2>" + 
+             "<h2>long: " + cur_pos.long + "</h2>" +
+             "<h1>LastDist: " + (twoPointsDis*1000).toFixed() + "</h1>" +
+             "<h1>Total Distance: " + (totalDis*1000).toFixed() + "</h1>");
     }
     
     function run(){
@@ -66,7 +67,7 @@ $(document).ready(function(){
         record = false;
         window.clearInterval(mytracker);
         $('#cur_pos').html("<h2>"+ geoarray.length +" Positions saved in Array</h2>"+
-                        "<h3> Total Distance: <u>"+totalDis*1000+" Meter moved</u></h3>");
+                        "<h3> Total Distance: <u>"+(totalDis*1000).toFixed()+" Meter moved</u></h3>");
         key = "Tracker" + Date.now();
         window.localStorage.setItem(key,JSON.stringify(geoarray));
         console.log(JSON.stringify(geoarray));

@@ -9,6 +9,7 @@ $(document).ready(function(){
     var lat, long, twoPointsDis;
     var last_pos, cur_pos;
     var totalDis = 0; 
+    var d = 0;
     
     function calculateDistance(lat1, lon1, lat2, lon2) {
         var R = 6371; // km
@@ -34,10 +35,7 @@ $(document).ready(function(){
         }
         twoPointsDis = calculateDistance(lat, long,
                                          last_pos.lat, last_pos.long);
-        if( twoPointsDis > 0.015) {
-            twoPointsDis = 0;
-        }
-        
+
         cur_pos = {lat: lat, long: long, dis: twoPointsDis};                               
         geoarray.push(cur_pos);
         
@@ -58,7 +56,7 @@ $(document).ready(function(){
     function start(){
         geoarray = [];
         record = true;
-        mytracker  = setInterval(run, 10000);
+        mytracker  = setInterval(run, 5000);
     }
     
     function stopp(){
@@ -112,9 +110,6 @@ $(document).ready(function(){
     function gesamt(){
         console.log(" beginn gesamt");
         var keys, i, j, einzelstrecke=[], laenge=0, count=0;
-        // Fehler war hier, ich hatte keys nicht geparst
-        // keys = window.localStorage.getItem("tracker");
-        // deshalb war keys[i] in zeile 95 [ und nicht "Tracker12345...."
         keys = JSON.parse(window.localStorage.getItem("tracker"));
         console.log(keys);
         if (keys.length > 0) {
@@ -128,7 +123,14 @@ $(document).ready(function(){
                 }
             }
             
-            $('#cur_pos').html("gesamtlänge: " + laenge + " count " + count);
+            d = (laenge*1000).toFixed();
+            if (d > 10000) {
+                d = d + ' m';
+            } else {
+                d = (d / 1000).toFixed(2) + ' km';
+            }
+            
+            $('#cur_pos').html("Gesamtstrecke: " + d + " | Messwerte: " + count);
         } else {
             $('#cur_pos').html("keine Daten vorhanden");
         }

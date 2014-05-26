@@ -1,3 +1,7 @@
+Done:
+ - start, stop one button
+ - long renamed to longi ( long is a reserved key )
+-----------------------------------------
 21.05.2014
 - UserInterface: responsive
 - Zeit muss angezeigt werden

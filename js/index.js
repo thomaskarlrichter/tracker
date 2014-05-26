@@ -6,7 +6,7 @@ $(document).ready(function(){
     var mytracker;
     var record = false;
     var geoarray = [];
-    var lat, long, twoPointsDis;
+    var lat, longi, twoPointsDis;
     var last_pos, cur_pos;
     var totalDis = 0; 
     var d = 0;
@@ -27,27 +27,23 @@ $(document).ready(function(){
     };
     function getPosition(position) {
         lat = position.coords.latitude;
-        long = position.coords.longitude;
+        longi = position.coords.longitude;
         if(geoarray.length > 0){
            last_pos = geoarray[geoarray.length - 1];
         } else {
-           last_pos = {lat: lat, long: long};
+           last_pos = {lat: lat, longi: longi};
         }
-        twoPointsDis = calculateDistance(lat, long,
-                                         last_pos.lat, last_pos.long);
+        twoPointsDis = calculateDistance(lat, longi,
+                                         last_pos.lat, last_pos.longi);
 
-        cur_pos = {lat: lat, long: long, dis: twoPointsDis};                               
+        cur_pos = {lat: lat, longi: longi, dis: twoPointsDis};                               
         geoarray.push(cur_pos);
         
         totalDis = 0; 
         for (var i = 0; i < geoarray.length; i++) {
            totalDis = totalDis + geoarray[i].dis;
         }
-        $('#cur_pos').html("<h2>"+(new Date()).toUTCString()+"</h2>" +
-             "<h2>lat: "+cur_pos.lat + "</h2>" + 
-             "<h2>long: " + cur_pos.long + "</h2>" +
-             "<h1>LastDist: " + (twoPointsDis*1000).toFixed() + "</h1>" +
-             "<h1>Total Distance: " + (totalDis*1000).toFixed() + "</h1>");
+        $('#cur_pos').html("<div>Distance: <b>"+totalDis+"</b></div>");
     }
     
     function run(){
@@ -61,13 +57,11 @@ $(document).ready(function(){
     }
     
     function stopp(){
-        console.log(" beginn stopp");
         var key;
         var keyarray = [];
         record = false;
         window.clearInterval(mytracker);
-        $('#cur_pos').html("<h2>"+ geoarray.length +" Positions saved in Array</h2>"+
-                        "<h3> Total Distance: <u>"+(totalDis*1000).toFixed()+" Meter moved</u></h3>");
+        $('#cur_pos').html("<h4> Total Distance: <u>"+totalDis*1000+"</u></h4>");
         key = "Tracker" + Date.now();
         window.localStorage.setItem(key,JSON.stringify(geoarray));
         console.log(JSON.stringify(geoarray));
@@ -125,7 +119,7 @@ $(document).ready(function(){
             }
             
             d = (laenge*1000).toFixed();
-            if (d > 10000) {
+            if (d < 10000) {
                 d = d + ' m';
             } else {
                 d = (d / 1000).toFixed(2) + ' km';
@@ -138,8 +132,15 @@ $(document).ready(function(){
     }
 
     if (navigator.geolocation) {
-        $("#start").on("click", start);
-        $("#stopp").on("click", stopp);
+        $("#startstop").on("click", function() {
+           if($("#startstop").html()  == 'Start') {
+                start();
+                $("#startstop").html('Stopp');
+           } else {
+                stopp();
+                $("#startstop").html('Start');
+           }
+        });
         $("#gesamt").on("click", gesamt);
         $("#testminutes").on("click", function() { console.log( JSON.stringify(getPerX('min')) ); });
         $("#testmonth").on("click", function() { console.log( JSON.stringify(getPerX('month')) ); });

@@ -9,10 +9,12 @@
         <title>Tracker</title>
     </head>
     <body ng-app="tracker">
-      <div ng-controller="TrackerController as tracker">
-        <button id="startstop" ng-click="tracker.toogle()">{{ tracker.button }}</button>
-        <button id="gesamt" ng-click="tracker.getGesamt()">Gesamtstrecke</button>
-        <div id="cur_pos">{{ tracker.gesamtstrecke }} : {{ tracker.count }}</div>
+     <div ng-controller="TrackerController as tracker">
+        <button id="startstop" ng-click="tracker.toogle(); btn = 1">{{ tracker.button }}</button>
+        <button id="gesamt" ng-click="tracker.getGesamt(); btn = 2">Gesamtstrecke</button>
+        <div id="dis" ng-show="btn === 1">Distance: 0 m</div>
+        <div id="time" ng-show="btn === 1">Time: 00:00:00</div>
+        <div id="total_dis" ng-show="btn === 2"><p>{{ tracker.gesamtstrecke }}</p><p>{{ tracker.count }}</p></div>
       </div>
 
       <script type="text/javascript" src="cordova.js"></script>

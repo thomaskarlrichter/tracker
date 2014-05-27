@@ -10,7 +10,8 @@
         var geoarray = [];
         var lat, longi, twoPointsDis;
         var last_pos, cur_pos;
-        var totalDis = 0; 
+        var totalDis = 0;
+        var s, m, h, time = 0;
     
         function calculateDistance(lat1, lon1, lat2, lon2) {
             var R = 6371; // km
@@ -46,8 +47,33 @@
             for (var i = 0; i < geoarray.length; i++) {
                totalDis = totalDis + geoarray[i].dis;
             }
+            totalDis = (1000 * totalDis).toFixed();
+            totalDis = 'Distance: ' + totalDis + ' m';
+            document.querySelector('#dis').innerHTML = totalDis;
+
+            time += 5;
+            document.querySelector('#time').innerHTML = 'Time: ' + getFomatedTime(time);
+
         }
         
+        function getFomatedTime(t) {
+            h = Math.floor(t / 3600);
+            if( h < 10) {
+                h = '0' + h;
+            }
+            t = t % 3600;
+            m = Math.floor(t / 60);
+            if( m < 10 ) {
+                m = '0' + m; 
+            }
+            s = t % 60;
+            if( s < 10 ) {
+                s = '0' + s;
+            }
+            t = h + ':' + m + ':' + s;
+            return t;
+        }
+
         function run(){
             navigator.geolocation.getCurrentPosition(getPosition);
         }
@@ -61,6 +87,7 @@
             stopp: function(){
                 var key;
                 var keyarray = [];
+                time = 0;
                 record = false;
                 window.clearInterval(mytracker);
                 key = "Tracker" + Date.now();
@@ -157,8 +184,8 @@
 
         this.getGesamt = function(){
                 var gesamt = trackerService.gesamt();
-                this.gesamtstrecke = gesamt.strecke;
-                this.count = gesamt.count;
+                this.gesamtstrecke = 'Total Distance: ' + gesamt.strecke;
+                this.count = 'Routes: ' + gesamt.count;
         };		
 
 	} ] );

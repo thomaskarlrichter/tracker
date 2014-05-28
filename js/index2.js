@@ -2,7 +2,7 @@
 
 (function(){
 
-	var myapp = angular.module('tracker', []);
+	var myapp = angular.module('tracker', ['ionic']);
 	
 	myapp.service('TrackerService', function() {
         var mytracker;

@@ -10,9 +10,10 @@
         <title>Tracker</title>
     </head>
     <body ng-app="tracker">
+        <div class="bar bar-header bar-dark"><h1 class="title">Tracker</h1></div>
         <ion-side-menu-content ng-controller="TrackerController as tracker">
 
-            <h1 class="center">Tracker</h1>
+          <div style="height: 3em;">&nbsp;</div>
 
           <ion-content>
             <button  ng-click="tracker.toogle()" ng-class="(tracker.button === 'Start') ? 'button-balanced' : 'button-assertive'" class="button button-block">{{ tracker.button }}</button>
@@ -25,9 +26,9 @@
               </ion-item>
             </ion-list>
           </ion-content>
-          <ion-footer-bar class="bar">
+          <div class="bar bar-footer bar-dark">
             <h2 class="title"><i class="icon ion-person-stalker">The Tracker-Team &copy; 2014</i></h2>
-          </ion-header-bar>
+          </div>
         </ion-side-menu-content>
 
         <script type="text/javascript" src="js/ionic.bundle.min.js"></script>
